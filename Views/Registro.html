@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ES">
+<head>
+
+<title>CEM</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<link rel="stylesheet" href="/public/css/font-awesome.min.css">
+<link rel="stylesheet" href="/public/css/magnific-popup.css">
+
+<link rel="stylesheet" href="/public/css/owl.theme.css">
+<link rel="stylesheet" href="/public/css/owl.carousel.css">
+
+<!-- MAIN CSS -->
+<link rel="stylesheet" href="/public/css/tooplate-style.css">
+<script src="/public/js/jquery.js"></script>
+<script src="/public/js/bootstrap.min.js"></script>
+<script src="/public/js/jquery.parallax.js"></script>
+<script src="/public/js/owl.carousel.min.js"></script>
+<script src="/public/js/jquery.magnific-popup.min.js"></script>
+<script src="/public/js/magnific-popup-options.js"></script>
+<script src="/public/js/modernizr.custom.js"></script>
+<script src="/public/js/smoothscroll.js"></script>
+<script src="/public/js/custom.js"></script>
+
+<link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet"/>
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+<script type="text/javascript">
+
+   $(document).ready(function(){
+       $('#btnCrear').click(function(){
+        $.ajax({
+            url: '/api/Usuarios',
+            type: 'POST',
+            data: $("#formulario").serialize(),
+            success: function (result) {
+                if(result==='true'){
+                    toastr.success('Usuario guardado con exito');
+                    setTimeout(function () { window.location.href='/Login' }, 4000);
+                }
+                else{
+                    toastr.error('Credenciales no validas');
+                }
+            },
+            error:function(){
+                alert('no funciona la wea');
+            }
+        }
+       );
+    });
+
+    $.ajax({
+            url: '/api/Instituciones',
+            type: 'get',
+            success: function (result) {
+                //alert(result);
+                var select=document.getElementById('Institucion');
+                result.forEach(function(currentValue, index, array){
+                    var opt = document.createElement('option');
+                    opt.value = currentValue['nomInstitucion'];
+                    opt.innerHTML = currentValue['nomInstitucion'];
+                    select.appendChild(opt);
+                });
+            },
+            error:function(){
+                alert('no funciona la wea');
+            }
+        }
+       );
+   });
+</script>
+
+</head>
+<body>
+
+<!-- PRE LOADER -->
+<div class="preloader">
+     <div class="spinner">
+          <span class="sk-inner-circle"></span>
+     </div>
+</div>
+
+
+<!-- MENU -->
+<div class="navbar custom-navbar navbar-fixed-top" role="navigation" style="background-color:black">
+     <div class="container">
+
+          <!-- NAVBAR HEADER -->
+          <div class="navbar-header">
+               <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon icon-bar"></span>
+                    <span class="icon icon-bar"></span>
+                    <span class="icon icon-bar"></span>
+               </button>
+               <!-- lOGO -->
+               <a href="index.html" class="navbar-brand">Centro de estudios montreal</a>
+          </div>
+
+          <!-- MENU LINKS -->
+          <div class="collapse navbar-collapse">
+               <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/" class="smoothScroll">Inicio</a></li>
+                    <li><a href="/Login" class="smoothScroll">Login</a></li>
+                    <li><a href="Programas" class="smoothScroll">Cursos</a></li>  
+                    <li><a href="#contact" class="smoothScroll">Let's talk</a></li>
+               </ul>
+          </div>
+
+     </div>
+</div>
+
+
+
+<!-- CONTACT -->
+<section id="contact" class="parallax-section">
+     <div class="container">
+          <div class="row">
+
+               <div class="col-md-offset-3 col-md-6 col-sm-12">
+                    <div class="section-title">
+                         <h1>Ingresa tus datos</h1>
+                    </div>
+               </div>
+
+               <div class="clearfix"></div>
+
+               <div class="col-md-offset-2 col-md-8 col-sm-12">
+                    <!-- LOGIN FORM HERE -->
+                    <form id="formulario">
+                              <input type="text" placeholder="Nombre de usuario" id="username" name="username" class="form-control" />
+                              <br />
+                          
+                              <input type="password" placeholder="password" id="password" name="password" class="form-control" />
+                              <br />
+                          
+                              <input type="text" placeholder="Primer nombre" id="pnombre" name="pnombre" class="form-control" />
+                              <br />
+                              <input type="text" placeholder="segundo nombre (opcional)" id="snombre" name="snombre" class="form-control" />
+                              <br />
+                              <input type="text" placeholder="apellido paterno" id="apellidop" name="apellidop" class="form-control" />
+                              <br />
+                          
+                              <input type="text" placeholder="apellido materno" id="apellidom" name="apellidom" class="form-control" />
+                              <br />
+                              <input type="text" placeholder="Email" id="email" name="email" class="form-control" />
+                              <br />
+                              <input type="text" placeholder="Numero celular" id="fonoCelular" name="fonoCelular" class="form-control" />
+                              <br />
+                              <select id="Institucion" id="Institucion" name="Institucion" class="form-control">
+                                  <option selected value="22">Seleccione su institucion</option>
+                              </select>
+                              <br />
+                              <input type="text" placeholder="Numero fijo" id="fonoFijo" name="fonoFijo" class="form-control" />
+                              <br />
+                              <select id="tipoUsuario" name="tipoUsuario" class="form-control">
+                                  <option selected>Seleccione el tipo de usuario</option>
+                                  <option value="5">Alumno</option>
+                                  <option value="4">Familia</option>
+                              </select>
+                              <br />
+                              <select id="carrera" name="carrera" class="form-control">
+                                   <option selected value="22">Seleccione su carrera</option>
+                                   
+                               </select>
+                               <br />
+                         <input class="btn btn-dark" type="button" id="btnCrear" name="btnCrear" value="Registrar">
+                    </form>
+               </div>
+
+          </div>
+     </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+     <div class="container">
+          <div class="row">
+
+               <div class="col-md-5 col-sm-6">
+                    <h2>Digital Studio</h2>
+                    <p>321 Donec et justo id risus, Malesuada pharetra,<br> Tristique vestibulum,<br> Lorem ipsum dolor</p>
+                    
+                    
+               </div>
+
+               <div class="col-md-4 col-sm-6">
+                    <div class="footer-info">
+                    	<h2>Keep in touch</h2>
+                         <p><a href="tel:010-090-0780">010-090-0780</a></p>
+                         <p><a href="mailto:info@company.com">info@company.com</a></p>
+                         <p><a href="#">Our Location</a></p>
+                    </div>
+               </div>
+
+               <div class="col-md-3 col-sm-12">
+               		
+                    <h2>About Us</h2>
+                    <p>Sed vestibulum posuere ante, eget blandit metus. Morbi sodales feugiat erat, et placerat sapien suscipit ut.</p>
+                    <ul class="social-icon">
+                         <li><a href="#" class="fa fa-twitter"></a></li>
+                         <li><a href="#" class="fa fa-facebook"></a></li>
+                         <li><a href="#" class="fa fa-instagram"></a></li>
+                         <li><a href="#" class="fa fa-linkedin"></a></li>
+                    </ul>
+                    
+               </div>
+
+               <div class="clearfix"></div>
+
+               <div class="col-md-12 col-sm-12">
+                    <div class="copyright-text">
+                         <p>Copyright © 2018 Company Name 
+                         
+                         | Design: <a rel="nofollow" href="https://www.tooplate.com">Tooplate</a></p>
+                    </div>
+               </div>
+               
+          </div>
+     </div>
+</footer>
+
+<!-- SCRIPTS -->
+
+
+</body>
+</html>

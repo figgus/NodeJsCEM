@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ES">
+<head>
+
+<title>CEM</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="/public/css/bootstrap.min.css">
+<link rel="stylesheet" href="/public/css/font-awesome.min.css">
+<link rel="stylesheet" href="/public/css/magnific-popup.css">
+
+
+<link rel="stylesheet" href="/public/css/owl.theme.css">
+<link rel="stylesheet" href="/public/css/owl.carousel.css">
+
+
+<!-- MAIN CSS -->
+<link rel="stylesheet" href="/public/css/tooplate-style.css">
+<script src="/public/js/jquery.js"></script>
+<script src="/public/js/bootstrap.min.js"></script>
+<script src="/public/js/jquery.parallax.js"></script>
+<script src="/public/js/owl.carousel.min.js"></script>
+<script src="/public/js/jquery.magnific-popup.min.js"></script>
+<script src="/public/js/magnific-popup-options.js"></script>
+<script src="/public/js/modernizr.custom.js"></script>
+<script src="/public/js/smoothscroll.js"></script>
+<script src="/public/js/custom.js"></script>
+
+<link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet"/>
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+<script type="text/javascript">
+
+   $(document).ready(function(){
+       $('#btnGuardar').click(function(){
+           alert('entro');
+           $.ajax({
+            url: '/api/Usuarios',
+            type: 'POST',
+            data: $("#formulario").serialize(),
+            success: function (result) {
+                if(result==='true'){
+                    toastr.success('Exito al crear el usuario nuevo');
+                    setTimeout(function () { window.location.href='/admin' }, 4000);
+                }
+                else{
+                    toastr.error('Alguno de los valores ingresados no es valido');
+                }
+            },
+            error:function(){
+                alert('no funciona la wea');
+            }
+        }
+       );
+       });
+   });
+</script>
+
+</head>
+<body>
+
+<!-- PRE LOADER -->
+<div class="preloader">
+     <div class="spinner">
+          <span class="sk-inner-circle"></span>
+     </div>
+</div>
+
+
+<!-- MENU -->
+<div class="navbar custom-navbar navbar-fixed-top" role="navigation" style="background-color:black">
+     <div class="container">
+
+          <!-- NAVBAR HEADER -->
+          <div class="navbar-header">
+               <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon icon-bar"></span>
+                    <span class="icon icon-bar"></span>
+                    <span class="icon icon-bar"></span>
+               </button>
+               <!-- lOGO -->
+               <a href="index.html" class="navbar-brand">Centro de estudios montreal</a>
+          </div>
+
+          <!-- MENU LINKS -->
+          <div class="collapse navbar-collapse">
+               <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/" class="smoothScroll">Inicio</a></li>
+                    <li><a href="/Login" class="smoothScroll">Login</a></li>
+                    <li><a href="/Programas" class="smoothScroll">Cursos</a></li>  
+                    <li><a href="#contact" class="smoothScroll">Let's talk</a></li>
+               </ul>
+          </div>
+
+     </div>
+</div>
+
+</br>
+</br>
+</br>
+</br>
+</br>
+
+<!-- form content -->
+<center>
+<div>
+  <h1>Ingrese la informacion solicitada</h1>
+     <form id="formulario">
+            <table>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>
+                        Tipo de usuario
+                    </td>
+                    <td>
+                        <select id="tipoUsuario" name="tipoUsuario" class="form-control">
+                            <option selected value="">--</option>
+                            <% tipoUsuario.forEach(function(currentValue, index, array){
+                                %> <option> <%= currentValue['nombre'] %> </option> <%
+                            }); %>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+
+                    <td>nombre de usuario</td>
+                    <td><input class="form-control" type="text" id="username" name="username" /></td>
+                </tr>
+                <tr>
+                    <td>
+                        password
+                    </td>
+                    <td>
+                        <input class="form-control" type="text" id="password" name="password" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        primer nombre
+                    </td>
+                    <td>
+                        <input class="form-control" type="text" id="pnombre" name="pnombre" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        segundo nombre
+                    </td>
+                    <td>
+                        <input class="form-control" type="text" id="snombre" name="snombre" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        apellido paterno
+                    </td>
+                    <td>
+                        <input class="form-control" type="text" id="apellidop" name="apellidop" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        apellido materno
+                    </td>
+                    <td>
+                        <input class="form-control" type="text" id="apellidom" name="apellidom" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Email
+                    </td>
+                    <td>
+                        <input class="form-control" type="email" id="email" name="email" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Fono movil
+                    </td>
+                    <td>
+                        <input class="form-control" type="text" id="fonoCelular" name="fonoCelular" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Fono fijo (opcional)
+                    </td>
+                    <td>
+                        <input class="form-control" type="text" id="fonoFijo" name="fonoFijo" />
+                    </td>
+                </tr>
+
+                <tr id="SEstado">
+                    <td>
+                        Estado alumno
+                    </td>
+                    <td>
+                        <select class="form-control" type="text" id="estado" name="estado" >
+                            <option value="1">Regular</option>
+                            <option value="0">No regular</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr id="SCarrera">
+                    <td>
+                        Carrera
+                    </td>
+                    <td>
+                        
+                        <select id="carrera" name="carrera" class="form-control">
+                            <option selected value="Seleccione una carrera">Seleccione una carrera</option>
+                            
+
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Institucion</td>
+                    <td>
+                    <select id="idInstitucion" name="idInstitucion" class="form-control">
+                     <option selected value="Seleccione una carrera">Seleccione una carrera</option>
+                     
+                    </select></td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td><input type="button" class="btn btn-primary" id="btnGuardar" name="btnGuardar" value="Guardar" /></td>
+                </tr>
+            </table>
+</form>
+</center>
+</div>
+<!-- End form content -->
+
+          <div class="row">
+
+               <div class="col-md-offset-3 col-md-6 col-sm-12">
+                    <div class="section-title">
+                         
+                    </div>
+               </div>
+
+               <div class="clearfix"></div>
+
+               <div class="col-md-offset-2 col-md-8 col-sm-12">
+                    <!-- Mantenedor FORM HERE -->
+                    
+
+
+               </div>
+
+          </div>
+     </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+     <div class="container">
+          <div class="row">
+
+               <div class="col-md-5 col-sm-6">
+                    <h2>Digital Studio</h2>
+                    <p>321 Donec et justo id risus, Malesuada pharetra,<br> Tristique vestibulum,<br> Lorem ipsum dolor</p>
+                    
+                    
+               </div>
+
+               <div class="col-md-4 col-sm-6">
+                    <div class="footer-info">
+                    	<h2>Keep in touch</h2>
+                         <p><a href="tel:010-090-0780">010-090-0780</a></p>
+                         <p><a href="mailto:info@company.com">info@company.com</a></p>
+                         <p><a href="#">Our Location</a></p>
+                    </div>
+               </div>
+
+               <div class="col-md-3 col-sm-12">
+               		
+                    <h2>About Us</h2>
+                    <p>Sed vestibulum posuere ante, eget blandit metus. Morbi sodales feugiat erat, et placerat sapien suscipit ut.</p>
+                    <ul class="social-icon">
+                         <li><a href="#" class="fa fa-twitter"></a></li>
+                         <li><a href="#" class="fa fa-facebook"></a></li>
+                         <li><a href="#" class="fa fa-instagram"></a></li>
+                         <li><a href="#" class="fa fa-linkedin"></a></li>
+                    </ul>
+                    
+               </div>
+
+               <div class="clearfix"></div>
+
+               <div class="col-md-12 col-sm-12">
+                    <div class="copyright-text">
+                         <p>Copyright © 2018 CEM 
+                         
+                         | Design: <a rel="nofollow" href="https://www.tooplate.com">Tooplate</a></p>
+                    </div>
+               </div>
+               
+          </div>
+     </div>
+</footer>
+
+<!-- SCRIPTS -->
+
+
+</body>
+</html>

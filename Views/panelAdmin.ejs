@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ES">
+<head>
+
+<title>CEM</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<style>
+     table {
+       font-family: arial, sans-serif;
+       border-collapse: collapse;
+       width: 100%;
+     }
+
+     td, th {
+       border: 1px solid #dddddd;
+       text-align: left;
+       padding: 8px;
+     }
+
+     tr:nth-child(even) {
+       background-color: #dddddd;
+     }
+</style>
+<link rel="stylesheet" href="/public/css/bootstrap.min.css">
+<link rel="stylesheet" href="/public/css/font-awesome.min.css">
+<link rel="stylesheet" href="/public/css/magnific-popup.css">
+
+
+<link rel="stylesheet" href="/public/css/owl.theme.css">
+<link rel="stylesheet" href="/public/css/owl.carousel.css">
+<link rel="stylesheet" href="/public/css/estilosTabs.css">
+
+
+<!-- MAIN CSS -->
+<link rel="stylesheet" href="/public/css/tooplate-style.css">
+<script src="/public/js/jquery.js"></script>
+<script src="/public/js/bootstrap.min.js"></script>
+<script src="/public/js/jquery.parallax.js"></script>
+<script src="/public/js/owl.carousel.min.js"></script>
+<script src="/public/js/jquery.magnific-popup.min.js"></script>
+<script src="/public/js/magnific-popup-options.js"></script>
+<script src="/public/js/modernizr.custom.js"></script>
+<script src="/public/js/smoothscroll.js"></script>
+<script src="/public/js/custom.js"></script>
+<script src="/public/js/TabsJs.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+
+
+<link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet"/>
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+<script type="text/javascript">
+
+     function BorrarUsuario(idUsuario){
+          bootbox.confirm("Are you sure?", function(result){
+               if(result){
+                    //alert(idUsuario);
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function () {
+                        
+                        if (this.readyState == 4 && this.status == 200) {
+                            alert(xhttp.responseText);
+                            if (xhttp.responseText.trim() === '"true"') {
+                                bootbox.alert("Usuario borrado con exito", function(){ /* your callback code */ })
+                            }
+                            else {
+                               bootbox.alert("No se pudo borrar")
+                            }
+                        }
+                    };
+                    xhttp.open("delete", '/api/Usuarios/'+idUsuario, true);
+                    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                    xhttp.send('id='+idUsuario);
+               }
+           });
+     }
+</script>
+
+</head>
+<body>
+
+<!-- PRE LOADER -->
+<div class="preloader">
+     <div class="spinner">
+          <span class="sk-inner-circle"></span>
+     </div>
+</div>
+
+
+<!-- MENU -->
+<div class="navbar custom-navbar navbar-fixed-top" role="navigation" style="background-color:black">
+     <div class="container">
+
+          <!-- NAVBAR HEADER -->
+          <div class="navbar-header">
+               <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon icon-bar"></span>
+                    <span class="icon icon-bar"></span>
+                    <span class="icon icon-bar"></span>
+               </button>
+               <!-- lOGO -->
+               <a href="index.html" class="navbar-brand">Centro de estudios montreal</a>
+          </div>
+
+          <!-- MENU LINKS -->
+          <div class="collapse navbar-collapse">
+               <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/" class="smoothScroll">Inicio</a></li>
+                    <li><a href="/Login" class="smoothScroll">Login</a></li>
+                    <li><a href="/Programas" class="smoothScroll">Cursos</a></li>  
+                    <li><a href="#contact" class="smoothScroll">Let's talk</a></li>
+               </ul>
+          </div>
+
+     </div>
+</div>
+
+
+
+
+<!-- CONTACT -->
+<section id="contact" class="parallax-section">
+     <div class="container">
+     
+     <div class="tab">
+  <button class="tablinks" onclick="openCity(event, 'Usuarios')">Usuarios</button>
+  <button class="tablinks" onclick="openCity(event, 'programasEstudio')">Programas de estudio</button>
+  <button class="tablinks" onclick="openCity(event, 'Tokyo')">Tokyo</button>
+</div>
+
+<!-- Tab content -->
+<div id="Usuarios" class="tabcontent">
+  <h1>Lista de usuarios</h1>
+  <a href="/CrearUsuario">Crear nuevo usuario</a>
+     <table>
+          <tr>
+            <th>id</th>
+            <th>username</th>
+            <th>Password</th>
+            <th>primer nombre</th>
+            <th>Segundo nombre</th>
+            <th>Apellido paterno</th>
+            <th>Apellido materno</th>
+            <th>Email</th>
+            <th>Fono celular</th>
+            <th>tipo de usuario</th>
+            <th>Carrera</th>
+            <th>estado</th>
+            <th>Institucion</th>
+            <th>Acciones</th>
+          </tr>
+          <%
+          //console.log(users);
+          users.forEach(function(currentValue, index, array){ %>
+               <tr>
+                    <td><%=currentValue['_id'] %></td>
+                    <td><%=currentValue['username'] %></td>
+                    <td><%=currentValue['password'] %></td>
+                    <td><%=currentValue['pNombre'] %></td>
+                    <td><%=currentValue['snombre'] %></td>
+                    <td><%=currentValue['apellidop'] %></td>
+                    <td><%=currentValue['apellidom'] %></td>
+                    <td><%=currentValue['email'] %></td>
+                    <td><%=currentValue['fonoCelular'] %></td>
+                    <td><%=currentValue['tipoUsuario'] %></td>
+                    <td><%=currentValue['carrera'] %></td>
+                    <td><%=currentValue['alumnoRegular'] %></td>
+                    <td><%=currentValue['Institucion'] %></td>
+                    <td>
+                         <a href="javascript:void(0)" onclick='BorrarUsuario("<%=currentValue['_id'] %>")'><img src="/public/images/delete.png" ></a>
+                         <a href=""><img src="/public/images/edit.png" ></a>
+                    </td>
+               </tr>
+              
+          <%}); %>
+          
+                      
+                      
+     </table>
+</div>
+
+<div id="programasEstudio" class="tabcontent">
+  <h1>Lista de Programas de estudio</h1>
+     <table>
+          <tr>
+            <th>id</th>
+            <th>nombre programa</th>
+            <th>Descripcion</th>
+            <th>Imagen</th>
+            <th>Cupos</th>
+            <th>id centro</th>
+            <th>Tipo de periodo</th>
+            <th>Area</th>
+            <th>Publicado</th>
+            <th>Fecha de publicacion</th>
+            <th>Acciones</th>
+          </tr>
+          <%
+          //console.log(programas);
+          programas.forEach(function(currentValue, index, array){ %>
+               <tr>
+                    <td><%=currentValue['_id'] %></td>
+                    <td><%=currentValue['nombrePrograma'] %></td>
+                    <td><%=currentValue['descripcion'] %></td>
+                    <td><%=currentValue['imagenReferencial'] %></td>
+                    <td><%=currentValue['cupos'] %></td>
+                    <td><%=currentValue['idCentro'] %></td>
+                    <td><%=currentValue['tipoPeriodo'] %></td>
+                    <td><%=currentValue['area'] %></td>
+                    <td><%=currentValue['publicado'] %></td>
+                    <td><%=currentValue['fechaPublicacion'] %></td>
+                    <td><a href=""><img src="/public/images/edit.png" >  <img src="/public/images/delete.png" ></td>
+               </tr>
+              
+          <%}); %>
+          
+                      
+                      
+     </table>
+</div>
+
+<div id="Tokyo" class="tabcontent">
+  <h3>Tokyo</h3>
+  <p>Tokyo is the capital of Japan.</p>
+</div>
+
+          <div class="row">
+
+               <div class="col-md-offset-3 col-md-6 col-sm-12">
+                    <div class="section-title">
+                         
+                    </div>
+               </div>
+
+               <div class="clearfix"></div>
+
+               <div class="col-md-offset-2 col-md-8 col-sm-12">
+                    <!-- Mantenedor FORM HERE -->
+                    
+
+
+               </div>
+
+          </div>
+     </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+     <div class="container">
+          <div class="row">
+
+               <div class="col-md-5 col-sm-6">
+                    <h2>Digital Studio</h2>
+                    <p>321 Donec et justo id risus, Malesuada pharetra,<br> Tristique vestibulum,<br> Lorem ipsum dolor</p>
+                    
+                    
+               </div>
+
+               <div class="col-md-4 col-sm-6">
+                    <div class="footer-info">
+                    	<h2>Keep in touch</h2>
+                         <p><a href="tel:010-090-0780">010-090-0780</a></p>
+                         <p><a href="mailto:info@company.com">info@company.com</a></p>
+                         <p><a href="#">Our Location</a></p>
+                    </div>
+               </div>
+
+               <div class="col-md-3 col-sm-12">
+               		
+                    <h2>About Us</h2>
+                    <p>Sed vestibulum posuere ante, eget blandit metus. Morbi sodales feugiat erat, et placerat sapien suscipit ut.</p>
+                    <ul class="social-icon">
+                         <li><a href="#" class="fa fa-twitter"></a></li>
+                         <li><a href="#" class="fa fa-facebook"></a></li>
+                         <li><a href="#" class="fa fa-instagram"></a></li>
+                         <li><a href="#" class="fa fa-linkedin"></a></li>
+                    </ul>
+                    
+               </div>
+
+               <div class="clearfix"></div>
+
+               <div class="col-md-12 col-sm-12">
+                    <div class="copyright-text">
+                         <p>Copyright © 2018 CEM 
+                         
+                         | Design: <a rel="nofollow" href="https://www.tooplate.com">Tooplate</a></p>
+                    </div>
+               </div>
+               
+          </div>
+     </div>
+</footer>
+
+<!-- SCRIPTS -->
+<link rel="stylesheet" href="/public/css/notiejs.css">
+<script src="/public/js/notiejs.js"></script>
+
+</body>
+</html>
